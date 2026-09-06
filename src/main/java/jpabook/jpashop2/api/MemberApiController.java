@@ -2,6 +2,7 @@ package jpabook.jpashop2.api;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jpabook.jpashop2.api.data.WrappedResult;
 import jpabook.jpashop2.domain.Address;
 import jpabook.jpashop2.domain.Member;
 import jpabook.jpashop2.service.MemberService;
@@ -71,12 +72,12 @@ public class MemberApiController {
    * 조회 V2: 응답 값으로 엔티티가 아닌 별도의 DTO를 반환한다.
    */
   @GetMapping("/api/v2/members")
-  public Result memverV2() {
+  public WrappedResult memverV2() {
     List<Member> findMembers = memberService.findMembers();
     List<MemberDto> collect = findMembers.stream()
         .map(m -> new MemberDto(m.getName(), m.getAddress()))
         .collect(Collectors.toList());
-    return new Result(collect.size(), collect);
+    return new WrappedResult(collect.size(), collect);
   }
 
   @Data
@@ -101,13 +102,6 @@ public class MemberApiController {
   static class UpdateMemberResponse {
     private Long id;
     private String name;
-  }
-
-  @Data
-  @AllArgsConstructor
-  static class Result<T> {
-    private int count;
-    private T data;
   }
 
   @Data

@@ -17,7 +17,7 @@ public class Jpashop2Application {
   @Bean
   public Hibernate7Module hibernate7Module() {
     Hibernate7Module hibernate7Module = new Hibernate7Module();
-    hibernate7Module.configure(FORCE_LAZY_LOADING, false);
+//    hibernate7Module.configure(FORCE_LAZY_LOADING, false);
     return hibernate7Module;
   }
 }

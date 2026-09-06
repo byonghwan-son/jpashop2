@@ -27,6 +27,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate7'
 
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:2.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
