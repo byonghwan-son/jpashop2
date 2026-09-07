@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head th:replace="~{fragments/header :: header}"/>
+<head th:replace="~{fragments/header :: header}">
+  <title>주문 내역</title>
+</head>
 <body>
 
 <div class="container">
@@ -42,16 +44,16 @@
       </thead>
 
       <tbody>
-      <tr th:each="item : ${orders}">
-        <td th:text="${item.id}"></td>
-        <td th:text="${item.member.name}"></td>
-        <td th:text="${item.orderItems[0].item.name}"></td>
-        <td th:text="${item.orderItems[0].orderPrice}"></td>
-        <td th:text="${item.orderItems[0].count}"></td>
-        <td th:text="${item.status}"></td>
-        <td th:text="${#temporals.format(item.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+      <tr th:each="ordItem : ${orders}">
+        <td th:text="${ordItem.id}"></td>
+        <td th:text="${ordItem.member.name}"></td>
+        <td th:text="${ordItem.orderItems[0].item.name}"></td>
+        <td th:text="${ordItem.orderItems[0].orderPrice}"></td>
+        <td th:text="${ordItem.orderItems[0].count}"></td>
+        <td th:text="${ordItem.status}"></td>
+        <td th:text="${#temporals.format(ordItem.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td>
-          <a th:if="${item.status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${item.id}+')'"
+          <a th:if="${ordItem.status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${ordItem.id}+')'"
              class="btn btn-danger">CANCEL</a>
         </td>
       </tr>

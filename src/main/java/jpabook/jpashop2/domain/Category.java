@@ -2,9 +2,7 @@ package jpabook.jpashop2.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop2.domain.item.Item;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @ToString(exclude = {"parent", "items", "child"})
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

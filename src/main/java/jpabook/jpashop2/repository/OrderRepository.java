@@ -1,8 +1,14 @@
 package jpabook.jpashop2.repository;
 
+import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jpabook.jpashop2.domain.Order;
+import jpabook.jpashop2.domain.OrderStatus;
+import jpabook.jpashop2.domain.QMember;
+import jpabook.jpashop2.domain.QOrder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -31,8 +37,34 @@ public class OrderRepository {
     return em.find(Order.class, id);
   }
 
-  // todo: 주문 내역 조회
   public List<Order> findAll(OrderSearch orderSearch) {
+    QOrder order = QOrder.order;
+    QMember member = QMember.member;
+
+    JPAQueryFactory query = new JPAQueryFactory(em);
+    return query
+        .select(order)
+        .from(order)
+        .join(order.member, member)
+        .where(statusEq(orderSearch.getOrderStatus()), nameLike(orderSearch, member))
+        .limit(1000)
+        .fetch();
+  }
+
+  private BooleanExpression nameLike(OrderSearch orderSearch, QMember member) {
+    if(!StringUtils.hasText(orderSearch.getMemberName()))
+      return null;
+    return member.name.like(orderSearch.getMemberName());
+  }
+
+  private BooleanExpression statusEq(OrderStatus statusCond) {
+    if(statusCond == null)
+      return null;
+    return QOrder.order.status.eq(statusCond);
+  }
+
+  // QueryDSL로 수정 필요.
+  public List<Order> findAll_Old(OrderSearch orderSearch) {
     String jpql = "select o From Order o join o.member m";
     boolean isFirstCondition = true;
     //주문 상태 검색

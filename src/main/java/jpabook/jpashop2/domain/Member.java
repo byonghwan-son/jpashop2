@@ -3,9 +3,7 @@ package jpabook.jpashop2.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.ArrayList;
@@ -15,6 +13,7 @@ import java.util.Objects;
 @Entity
 @Getter @Setter
 @ToString(exclude = "orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
